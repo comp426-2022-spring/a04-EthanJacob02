@@ -1,8 +1,6 @@
-import {createRequire} from 'module';
-
-const require = createRequire(import.meta.url)
 const express = require('express')
 const app = express()
+const db = require("./database.js")
 
 const args = require('minimist')(process.argv.slice(2));
 const port = args.port || process.env.PORT || 5000
