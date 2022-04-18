@@ -26,7 +26,6 @@ const sqlInit = `
         url VARCHAR,
         protocol TEXT,
         httpversion NUMERIC,
-        secure TEXT,
         status INTEGER,
         referer VARCHAR,
         useragent VARCHAR
