@@ -5,8 +5,6 @@ const db = require("./database.js")
 const args = require('minimist')(process.argv.slice(2));
 const port = args.port || process.env.PORT || 5000
 
-// See what is stored in the object produced by minimist
-console.log(args)
 // Store help text 
 const help = (`
 server.js [options]
@@ -34,6 +32,23 @@ if (args.help || args.h) {
 const server = app.listen(port, () => {
     console.log('App listening on port %PORT%'.replace('%PORT%', port))
 });
+
+app.use( (req, res, next) => {
+    // Your middleware goes here.
+    let logdata = {
+        remoteaddr: req.ip,
+        remoteuser: req.user,
+        time: Date.now(),
+        method: req.method,
+        url: req.url,
+        protocol: req.protocol,
+        httpversion: req.httpVersion,
+        status: res.statusCode,
+        referer: req.headers['referer'],
+        useragent: req.headers['user-agent']
+    }
+    next();
+})
 
 app.get('/app', (req, res) => {
     // Respond with status 200

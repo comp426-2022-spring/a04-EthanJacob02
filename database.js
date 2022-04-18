@@ -4,7 +4,7 @@
 const Database = require('better-sqlite3');
 
 // Connect to a database or create one if it doesn't exist yet.
-const db = new Database('user.db');
+const db = new Database('log.db');
 
 // Is the database initialized or do we need to initialize it?
 const stmt = db.prepare(`
@@ -18,8 +18,19 @@ if (row === undefined) {
 console.log('Your database appears to be empty. I will initialize it now.');
 // Set a const that will contain your SQL commands to initialize the database.
 const sqlInit = `
-    CREATE TABLE userinfo ( id INTEGER PRIMARY KEY, username TEXT, password TEXT );
-    INSERT INTO userinfo (username, password) VALUES ('user1','supersecurepassword'),('test','anotherpassword');
+    CREATE TABLE accesslog ( id INTEGER PRIMARY KEY, 
+        remoteaddr TEXT, 
+        remoteuser TEXT, 
+        time TEXT, 
+        method TEXT, 
+        url TEXT,
+        protocol TEXT,
+        httpversion TEXT,
+        secure TEXT,
+        status TEXT,
+        referer TEXT,
+        useragent TEXT
+        );
 `;
 // Execute SQL commands that we just wrote above.
 db.exec(sqlInit);
